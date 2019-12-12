@@ -1,4 +1,4 @@
-import getIsLoggedIn from "./account_logic.js";
+import getIsLoggedIn, { getInfo } from "./account_logic.js";
 
 export default function makeHeader() {
     let str =  `<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -13,25 +13,24 @@ export default function makeHeader() {
                             <li class="nav-item active">
                                 <a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
                             </li>`;
-    if (getIsLoggedIn() === true)
-        str += `            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Chat
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="create_chat.html">New Chat</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="chats.html">Current Chats</a>
-                                </div>
-                            </li>`;
+    if (getIsLoggedIn() === true) {
+        if (getInfo()[3]=="false"){
+            str += `
+            <li class="nav-item active">
+            <a class="nav-link" href="html/create_chat.html">New Chat <span class="sr-only">(current)</span></a>
+            </li>`;
+        }
+        str +=`<li class="nav-item active">
+        <a class="nav-link" href="html/chats.html">Current Chats <span class="sr-only">(current)</span></a>
+        </li>`;
+    }
     str += `            </ul>
                         <ul class="navbar-nav">
                             <li class="nav-item align-self-end">`
     if (getIsLoggedIn() === true)
-        str += `                <a class="nav-link" href="logout.html">Logout</a>`;
+        str += `                <a class="nav-link" href="html/login-logout.html">Logout</a>`;
     else
-        str += `                <a class="nav-link" href="login.html">Login</a>`;
+        str += `                <a class="nav-link" href="html/login-logout.html">Login</a>`;
     str += `                </li>
                         </ul>
                     </div>
